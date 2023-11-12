@@ -10,7 +10,7 @@ public class CalcServerEx {
         //when blank has been sent from client
         if (st.countTokens() != 3)
             return "[error] nothing has been sent";
-            
+
         String res = "";
         int op1 = Integer.parseInt(st.nextToken());
         String opcode = st.nextToken();
@@ -24,6 +24,9 @@ public class CalcServerEx {
                 break;
             case "*":
                 res = Integer.toString(op1 * op2);
+                break;
+            case "/":
+                res = Integer.toString(op1 / op2);
                 break;
             default:
                 res = "error";
