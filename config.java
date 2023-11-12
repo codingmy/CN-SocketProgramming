@@ -1,9 +1,9 @@
-public class config {
+public class Config {
     private String ipAddress=null;
-    private String portNum=null;
+    private String portNum="null";
 
     // constructor
-    public config(){}
+    public Config(){}
 
     //getter
     public String getIpAddress() {
