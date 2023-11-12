@@ -29,7 +29,7 @@ public class CalcServerEx {
                 res = Integer.toString(op1 / op2);
                 break;
             default:
-                res = "error";
+                res = "[error] wrong operation";
         }
         return res;
     }
