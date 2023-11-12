@@ -7,8 +7,8 @@ public class CalcServerEx {
     public static String calc(String exp) {
         StringTokenizer st = new StringTokenizer(exp, " ");
 
-        //when blank has been sent from client
-        if (st.countTokens() != 3)
+        //when blank (nothing or spaces) has been sent from client
+        if (st.countTokens() < 1 || st.toString().isEmpty())
             return "[error] nothing has been sent";
 
         String res = "";
