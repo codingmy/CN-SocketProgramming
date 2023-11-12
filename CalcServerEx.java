@@ -6,8 +6,11 @@ public class CalcServerEx {
 
     public static String calc(String exp) {
         StringTokenizer st = new StringTokenizer(exp, " ");
+
+        //when blank has been sent from client
         if (st.countTokens() != 3)
-            return "error";
+            return "[error] nothing has been sent";
+            
         String res = "";
         int op1 = Integer.parseInt(st.nextToken());
         String opcode = st.nextToken();
