@@ -38,8 +38,19 @@ public class CalcServer {
 
             
         String res = "";
-        int op1 = Integer.parseInt(st.nextToken());
-        int op2 = Integer.parseInt(st.nextToken());
+        String in1=st.nextToken();
+        String in2=st.nextToken();
+        
+        //check format is right, 
+        //if not, don't translate the value at integer position into integer
+        //to prevent error 
+        int op1=0, op2=0;
+        if(isInteger(in1) && isInteger(in2))
+        {
+            op1 = Integer.parseInt(in1);
+            op2 = Integer.parseInt(in2);
+        }
+        else opr="OPR";
 
         //calculate part
         switch (opr) {
