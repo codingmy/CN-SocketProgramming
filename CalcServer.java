@@ -43,6 +43,8 @@ public class CalcServer {
         String res = "";
         int op1 = Integer.parseInt(st.nextToken());
         int op2 = Integer.parseInt(st.nextToken());
+
+        //calculate part
         switch (opr) {
             case "+":
                 res = Integer.toString(op1 + op2);
@@ -60,7 +62,7 @@ public class CalcServer {
                 res="[error] wrong input format, format: integer operation integer";
                 break;
             default:
-                res = "[error] wrong operation, put ";
+                res = "[error] wrong input format, format: integer operation integer";
         }
         return res;
     }
