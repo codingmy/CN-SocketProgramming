@@ -8,26 +8,42 @@ public class CalcClient {
         BufferedWriter out = null;
         Socket socket = null;
         Scanner scanner = new Scanner(System.in);
-        String SerIpAddress;
-        String SerPortNum;
-        Config configData = new Config();
+        String SerIpAddress=null;
+        String SerPortNum=null;
         String defaultIpAdd="localhost";
         String defaultPortNum="9999";
-        try {
-            
-            //get server's ip, portnum
-            //check whether preset of server data
-            if(configData.getIpAddress()==null || configData.getPortNum()==null)
+        String fileName = "serverInfo.dat";
+        File file = new File(fileName);
+        try{       
+            if(file.exists())
             {
-                //setting default data
-                configData.setIpAddress(defaultIpAdd);
-                configData.setPortNum(defaultPortNum);
-            }    
-            //get server's ip, portnum from configuration data
-            SerIpAddress=configData.getIpAddress();
-            SerPortNum=configData.getPortNum();
+            
+                BufferedReader bufferReader = null;
+                bufferReader = new BufferedReader(new FileReader(fileName));
+
+                String wholeLine = bufferReader.readLine();
+                String[] array=wholeLine.split(", port ");
+                SerIpAddress = array[0];
+                SerPortNum = array[1];
+                bufferReader.close();
+
+            }
+            else
+            {
+            //use default ip, portNum
+                SerIpAddress = defaultIpAdd;
+                SerPortNum = defaultPortNum;            
+            } 
+        } catch (IOException e)
+        {
+            System.out.println("[error] setting server ip, portnum");
+        }
 
 
+
+
+
+         try {
             socket = new Socket(SerIpAddress, Integer.parseInt(SerPortNum));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -95,14 +111,14 @@ public class CalcClient {
             try {
                 scanner.close();
                 if (socket != null)
-                    socket.close(); // 클라이언트 소켓 닫기
+                    socket.close(); // close the client socket
             } catch (IOException e) {
-                System.out.println("서버와 채팅 중 오류가 발생했습니다.");
+                System.out.println("Error chatting with server.");
             }
         }
     }
 
-
+    //function to check integer
     public static boolean isInteger(String s) {
         try { 
             Integer.parseInt(s); 
@@ -114,7 +130,3 @@ public class CalcClient {
         return true;
     }
 }
-//public void getConfig(String ip, String portNum)
-//{
-    //ip=config.getIpAddress();
-//} 
