@@ -10,12 +10,34 @@ public class CalcServerEx {
         //when blank (nothing or spaces) has been sent from client
         if (st.countTokens() < 1 || st.toString().isEmpty())
             return "[error] nothing has been sent";
+        //if (st.countTokens()<=2 )
+          //  return "[error] Insufficient input values";
 
+        //protocal part
+        String splitMsg=st.nextToken().toString();
+        String opr;
+        switch (splitMsg) {
+            case "PLU":
+                opr="+";
+                break;
+            case "MIN":
+                opr="-";
+                break;
+            case "MUP":
+                opr="*";
+                break;
+            case "DIV":
+                opr="/";
+                break;
+            default:
+                opr="OPR";
+        }
+
+            
         String res = "";
         int op1 = Integer.parseInt(st.nextToken());
-        String opcode = st.nextToken();
         int op2 = Integer.parseInt(st.nextToken());
-        switch (opcode) {
+        switch (opr) {
             case "+":
                 res = Integer.toString(op1 + op2);
                 break;
