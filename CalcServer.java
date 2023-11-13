@@ -2,9 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 public class CalcServer {
 
     public static String calc(String exp) {
@@ -67,6 +64,17 @@ public class CalcServer {
         return res;
     }
 
+    public static boolean isInteger(String s) {
+        try { 
+            Integer.parseInt(s); 
+        } catch(NumberFormatException e) { 
+            return false; 
+        } catch(NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
+    
     public static void main(String[] args) throws Exception{
         BufferedReader in = null;
         BufferedWriter out = null;

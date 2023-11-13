@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class CalcClientEx {
+public class CalcClient {
     public static void main(String[] args) {
         BufferedReader in = null;
         BufferedWriter out = null;
@@ -32,8 +32,8 @@ public class CalcClientEx {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             while (true) {
-                System.out.print("계산식(빈칸으로 띄어 입력,예:24 + 42)>>"); // 프롬프트
-                String outputMessage = scanner.nextLine(); // 키보드에서 수식 읽기
+                System.out.print("Calculation formula (enter in blank spaces, e.g. 24 + 42)>>"); 
+                String outputMessage = scanner.nextLine(); // input from user's keyboard
                 
                 if (outputMessage.equalsIgnoreCase("bye")) {
                     out.write(outputMessage + "\n"); // "bye" 문자열 전송
@@ -72,7 +72,6 @@ public class CalcClientEx {
 
                 }
 
-                //send data to server
                 //merge splited message as protocol rule
                 for(int i=0;i<leng;i++)
                 {
@@ -81,12 +80,14 @@ public class CalcClientEx {
                     proOut=proOut+ " " + splitMsg[i];
                 }
                 proOut=proOut+"\n";
+                
+                //send data to server
                 out.write(proOut); 
                 out.flush();
 
                 //get data from server
-                String inputMessage = in.readLine(); // 서버로부터 계산 결과 수신
-                System.out.println("계산 결과: " + inputMessage);
+                String inputMessage = in.readLine(); // get data from sever
+                System.out.println("result: " + inputMessage);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -102,16 +103,16 @@ public class CalcClientEx {
     }
 
 
-public static boolean isInteger(String s) {
-    try { 
-        Integer.parseInt(s); 
-    } catch(NumberFormatException e) { 
-        return false; 
-    } catch(NullPointerException e) {
-        return false;
+    public static boolean isInteger(String s) {
+        try { 
+            Integer.parseInt(s); 
+        } catch(NumberFormatException e) { 
+            return false; 
+        } catch(NullPointerException e) {
+            return false;
+        }
+        return true;
     }
-    return true;
-}
 }
 //public void getConfig(String ip, String portNum)
 //{
