@@ -34,13 +34,35 @@ public class CalcClientEx {
             while (true) {
                 System.out.print("계산식(빈칸으로 띄어 입력,예:24 + 42)>>"); // 프롬프트
                 String outputMessage = scanner.nextLine(); // 키보드에서 수식 읽기
+                
                 if (outputMessage.equalsIgnoreCase("bye")) {
                     out.write(outputMessage + "\n"); // "bye" 문자열 전송
                     out.flush();
                     break; // 사용자가 "bye"를 입력한 경우 서버로 전송 후 연결 종료
                 }
+
+                //protocal part
+                String[] splitMsg=outputMessage.split(" ");
+                String opr;
+                switch (splitMsg[1]) {
+                    case "+":
+                    opr="PLU";
+                    break;
+                case "-":
+                    opr="MIN";
+                    break;
+                case "*":
+                    opr="MUP";
+                    break;
+                case "/":
+                    opr="DIV";
+                    break;
+                default:
+                    opr="OPR";
+                }
+
                 //send data to server
-                out.write(outputMessage + "\n"); // 키보드에서 읽은 수식 문자열 전송
+                out.write(opr +" "+ splitMsg[0] + " "+ splitMsg[2] + "\n"); // 키보드에서 읽은 수식 문자열 전송
                 out.flush();
 
                 //get data from server
