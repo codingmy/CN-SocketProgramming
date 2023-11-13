@@ -12,9 +12,10 @@ public class CalcClient {
         String SerPortNum=null;
         String defaultIpAdd="localhost";
         String defaultPortNum="9999";
-        String fileName = "serverInfo.dat";
+        String fileName = "server_Info.dat";
         File file = new File(fileName);
         try{       
+            //if file server_Info.dat exists, read file data
             if(file.exists())
             {
             
@@ -30,7 +31,7 @@ public class CalcClient {
             }
             else
             {
-            //use default ip, portNum
+            //else use default ip, portNum
                 SerIpAddress = defaultIpAdd;
                 SerPortNum = defaultPortNum;            
             } 
@@ -52,12 +53,13 @@ public class CalcClient {
                 String outputMessage = scanner.nextLine(); // input from user's keyboard
                 
                 if (outputMessage.equalsIgnoreCase("bye")) {
-                    out.write(outputMessage + "\n"); // "bye" 문자열 전송
+                    out.write(outputMessage + "\n"); // "bye" string send
                     out.flush();
-                    break; // 사용자가 "bye"를 입력한 경우 서버로 전송 후 연결 종료
+                    break; 
                 }
 
                 //protocal part
+                //spilt msg from user by blank
                 String[] splitMsg=outputMessage.split(" ");
                 int leng=splitMsg.length;
                 String proOut=null; 
