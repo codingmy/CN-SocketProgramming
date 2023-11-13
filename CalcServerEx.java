@@ -10,9 +10,10 @@ public class CalcServerEx {
         //when blank (nothing or spaces) has been sent from client
         if (st.countTokens() < 1 || st.toString().isEmpty())
             return "[error] nothing has been sent";
-        //if (st.countTokens()<=2 )
-          //  return "[error] Insufficient input values";
-
+        if (st.countTokens()<=2 )
+            return "[error] Insufficient input values";
+        if (st.countTokens()>3)
+            return "[error] too many input values";
         //protocal part
         String splitMsg=st.nextToken().toString();
         String opr;
