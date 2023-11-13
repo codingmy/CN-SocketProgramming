@@ -46,7 +46,7 @@ public class CalcClientEx {
                 int leng=splitMsg.length;
                 String proOut=null; 
 
-                //potocol that switch operation when leng>2
+                //protocol that switch operation when leng>2
                 if(leng>=2 && !isInteger(splitMsg[1]))
                 {
                     
