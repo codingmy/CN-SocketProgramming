@@ -43,26 +43,45 @@ public class CalcClientEx {
 
                 //protocal part
                 String[] splitMsg=outputMessage.split(" ");
-                String opr;
-                switch (splitMsg[1]) {
-                    case "+":
-                    opr="PLU";
-                    break;
-                case "-":
-                    opr="MIN";
-                    break;
-                case "*":
-                    opr="MUP";
-                    break;
-                case "/":
-                    opr="DIV";
-                    break;
-                default:
-                    opr="OPR";
+                int leng=splitMsg.length;
+                String proOut=null; 
+
+                //potocol that switch operation when leng>2
+                if(leng>=2 && !isInteger(splitMsg[1]))
+                {
+                    
+                    String opr;
+                    
+                    switch (splitMsg[1]) {
+                        case "+":
+                        opr="PLU";
+                        break;
+                    case "-":
+                        opr="MIN";
+                        break;
+                    case "*":
+                        opr="MUP";
+                        break;
+                    case "/":
+                        opr="DIV";
+                        break;
+                    default:
+                        opr="OPR";
+                    }
+                    proOut=opr;
+
                 }
 
                 //send data to server
-                out.write(opr +" "+ splitMsg[0] + " "+ splitMsg[2] + "\n"); // 키보드에서 읽은 수식 문자열 전송
+                //merge splited message as protocol rule
+                for(int i=0;i<leng;i++)
+                {
+                    if(i==1)
+                        continue;
+                    proOut=proOut+ " " + splitMsg[i];
+                }
+                proOut=proOut+"\n";
+                out.write(proOut); 
                 out.flush();
 
                 //get data from server
@@ -81,9 +100,19 @@ public class CalcClientEx {
             }
         }
     }
+
+
+public static boolean isInteger(String s) {
+    try { 
+        Integer.parseInt(s); 
+    } catch(NumberFormatException e) { 
+        return false; 
+    } catch(NullPointerException e) {
+        return false;
+    }
+    return true;
 }
-
-
+}
 //public void getConfig(String ip, String portNum)
 //{
     //ip=config.getIpAddress();
