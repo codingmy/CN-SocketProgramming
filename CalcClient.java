@@ -104,8 +104,46 @@ public class CalcClient {
                 out.flush();
 
                 //get data from server
-                String inputMessage = in.readLine(); // get data from sever
-                System.out.println("result: " + inputMessage);
+                String serMessage = in.readLine(); // get data from sever
+                
+                String [] splitSerMsg = serMessage.split(" ");
+                String keyMsg= splitSerMsg[0];
+                String value = splitSerMsg[1];
+                String decodedOutputMsg=null;
+
+                //check whether error or answer
+                if(keyMsg.equals("ANS"))
+                {    
+                    System.out.println("result: " + value);
+                }
+                else if(keyMsg.equals("ERR"))
+                {
+                    decodedOutputMsg= "[error] ";
+                    switch (value) {
+                        case "LESS":
+                            //the number of input values less than 3
+                            decodedOutputMsg += "Insufficient input values";
+                            break;
+                        case "MUCH":
+                            //the number of input values more than 3
+                            decodedOutputMsg += "too many input values";
+                            break;
+                        case "FORM":
+                            //the number of input values is 3 but wrong format
+                            decodedOutputMsg += "wrong input format, format: integer operation integer";
+                            break;
+                        case "0_DIV":
+                            //when divide to 0
+                            decodedOutputMsg += "can't divide by 0";
+                            break;
+                        case "OPR":
+                            decodedOutputMsg += "wrong operation, input +, -, /, *";
+                            break;
+                    }
+                System.out.println("result: " + decodedOutputMsg);
+
+                }
+
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
