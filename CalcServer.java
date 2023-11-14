@@ -9,11 +9,11 @@ public class CalcServer {
 
         //when blank (nothing or spaces) has been sent from client
         if (st.countTokens()<=2 )
-            return "[error] Insufficient input values";
+            return "ERR LESS";
         if (st.countTokens()>3)
-            return "[error] too many input values";
+            return "ERR MUCH";
         
-        //protocal part
+        //protocal(decoding(client msg for server)) part
         String splitMsg=st.nextToken().toString();
         String opr;
         switch (splitMsg) {
@@ -30,10 +30,10 @@ public class CalcServer {
                 opr="/";
                 break;
             case "null":
-                opr="OPR";
+                opr="ERR OPR";
                 break;
             default:
-                opr="OPR";
+                opr="ERR OPR";
         }
 
             
@@ -50,30 +50,35 @@ public class CalcServer {
             op1 = Integer.parseInt(in1);
             op2 = Integer.parseInt(in2);
         }
-        else opr="OPR";
+        else opr="ERR FORM";
 
-        //calculate part
+        //calculate & encoding(server value for sending client) part
         switch (opr) {
             case "+":
-                res = Integer.toString(op1 + op2);
+                res = "ANS "+Integer.toString(op1 + op2);
                 break;
             case "-":
-                res = Integer.toString(op1 - op2);
+                res = "ANS "+Integer.toString(op1 - op2);
                 break;
             case "*":
-                res = Integer.toString(op1 * op2);
+                res = "ANS "+Integer.toString(op1 * op2);
                 break;
             case "/":
                 //check whether divide to 0, return error msg
                 if(op2 == 0)
-                    return "[error] can't divide by 0";
-                res = Integer.toString(op1 / op2);
+                    return "ERR 0_DIV";
+                res = "ANS "+Integer.toString(op1 / op2);
                 break;
-            case "OPR":
-                res="[error] wrong input format, format: integer operation integer";
+            case "ERR OPR":
+                //wrong operation
+                res = opr; 
+                break;
+            case "ERR FORM":
+                //integer is not at right position
+                res = opr;
                 break;
             default:
-                res = "[error] wrong input format, format: integer operation integer";
+                res = "ERR FORM";
         }
         return res;
     }
@@ -135,6 +140,9 @@ public class CalcServer {
 
                 while (true) {
                     String inputMessage = in.readLine();
+                    System.out.println(inputMessage+" inputtttttttt");
+                    if(inputMessage ==null)
+                       continue;
                     if (inputMessage.equalsIgnoreCase("bye")) {
                         System.out.println("Client terminated the connection");
                         break; // Shut down when get "bye"
